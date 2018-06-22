@@ -30,6 +30,9 @@ sudo systemctl enable elasticsearch
 sudo systemctl enable thehive
 sudo systemctl enable cortex
 
+apt-get -y install build-essential git python-dev mongodb redis-server libxml2-dev libxslt-dev zlib1g-dev python-virtualenv wkhtmltopdf 
+pip install setuptools wheel 
+curl https://raw.githubusercontent.com/yeti-platform/yeti/master/extras/ubuntu_bootstrap.sh | sudo /bin/bash
 reboot
 
 #After reboot
