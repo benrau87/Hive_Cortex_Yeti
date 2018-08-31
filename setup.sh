@@ -40,7 +40,7 @@ for I in /etc/cortex/Cortex-Analyzers/analyzers/*/requirements.txt; do  -H pip3 
 
 #Yeti
 apt-get -y install build-essential git python-dev mongodb redis-server libxml2-dev libxslt-dev zlib1g-dev python-virtualenv wkhtmltopdf 
-pip install setuptools wheel 
+pip install setuptools wheel uwsgi
 curl https://raw.githubusercontent.com/yeti-platform/yeti/master/extras/ubuntu_bootstrap.sh |  /bin/bash
 
 
