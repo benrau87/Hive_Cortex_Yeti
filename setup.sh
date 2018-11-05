@@ -25,6 +25,17 @@ echo 'deb https://dl.bintray.com/cert-bdf/debian any main' |  tee -a /etc/apt/so
 apt-key adv --keyserver hkp://pgp.mit.edu --recv-key 562CBC1C
 apt-get update
 apt-get install -y --allow-unauthenticated thehive
+
+(cat << _EOF_
+# Secret key
+# ~~~~~
+# The secret key is used to secure cryptographics functions.
+# If you deploy your application to several instances be sure to use the same key!
+play.crypto.secret="$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 64 | head -n 1)"
+_EOF_
+) | sudo tee -a /etc/thehive/application.conf
+
+
 systemctl enable thehive
 
 #Cortex
