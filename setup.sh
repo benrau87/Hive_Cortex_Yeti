@@ -75,10 +75,8 @@ systemctl enable cortex
 
 
 #After reboot
-#/etc/thehive/conf
-#add cortex url 
-#/etc/cortex/conf 
-#add cortex domain (http://localhost:9001)
+#/etc/thehive/application.conf
+#add cortex server (http://localhost:9001)
 
 #For Cortex, create org, add orgadmin, login as orgadmin, setup analyzers
 #For The Hive, import reports
