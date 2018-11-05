@@ -24,7 +24,7 @@ systemctl enable elasticsearch
 echo 'deb https://dl.bintray.com/cert-bdf/debian any main' |  tee -a /etc/apt/sources.list.d/thehive-project.list
 apt-key adv --keyserver hkp://pgp.mit.edu --recv-key 562CBC1C
 apt-get update
-apt-get install -y --no-install-recommends thehive
+apt-get install -y --allow-unauthenticated thehive
 systemctl enable thehive
 
 #Cortex
