@@ -73,11 +73,8 @@ systemctl enable cortex
 
 #After reboot
 #/etc/thehive/conf
-#add key
 #add cortex url 
 #/etc/cortex/conf 
-#add key
-#add play.modules.enabled += connectors.cortex.CortexConnector
 #add cortex domain (http://localhost:9001)
 
 #For Cortex, create org, add orgadmin, login as orgadmin, setup analyzers
