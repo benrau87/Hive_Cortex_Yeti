@@ -43,6 +43,7 @@ _EOF_
 
 search.host = ['127.0.0.1:9300']
 analyzer.path = ["/opt/Cortex-Analyzers/analyzers"]
+play.modules.enabled += connectors.cortex.CortexConnector
 
 ) | sudo tee -a /etc/cortex/application.conf
 
