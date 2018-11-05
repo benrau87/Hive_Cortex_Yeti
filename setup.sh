@@ -60,8 +60,10 @@ play.modules.enabled += connectors.cortex.CortexConnector
 
 cd /opt
 git clone https://github.com/TheHive-Project/Cortex-Analyzers
-for I in /opt/Cortex-Analyzers/analyzers/*/requirements.txt; do  -H pip2 install -r $I; done && \
-for I in /opt/Cortex-Analyzers/analyzers/*/requirements.txt; do  -H pip3 install -r $I || true; done
+python -m pip install --upgrade pip
+python3 -m pip install --upgrade pip
+for I in /opt/Cortex-Analyzers/analyzers/*/requirements.txt; do python -m pip install -r $I; done && \
+for I in /opt/Cortex-Analyzers/analyzers/*/requirements.txt; do  python3 -m pip install -r $I || true; done
 systemctl enable cortex
 
 #Yeti
