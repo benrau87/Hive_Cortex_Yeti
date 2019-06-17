@@ -11,6 +11,7 @@ apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-key D88E42B4
 echo "deb https://artifacts.elastic.co/packages/5.x/apt stable main" |  tee -a /etc/apt/sources.list.d/elastic-5.x.list
 apt-get update
 apt-get install -y --no-install-recommends apt-transport-https openjdk-8-jre-headless elasticsearch python-pip python2.7-dev python3-pip python3-dev ssdeep libfuzzy-dev libfuzzy2 libimage-exiftool-perl libmagic1 build-essential git libssl-dev
+pip install setuptools
 echo 'network.host: 127.0.0.1' > /etc/elasticsearch/elasticsearch.yml
 echo 'script.inline: on' >> /etc/elasticsearch/elasticsearch.yml
 echo 'cluster.name: hive' >> /etc/elasticsearch/elasticsearch.yml
