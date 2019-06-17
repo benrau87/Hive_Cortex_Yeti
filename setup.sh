@@ -64,8 +64,8 @@ git clone https://github.com/TheHive-Project/Cortex-Analyzers
 python -m pip install --upgrade pip
 python3 -m pip install --upgrade pip
 python -m pip install setuptools
-for I in /opt/Cortex-Analyzers/analyzers/*/requirements.txt; do python -m pip install -r $I; done && \
-for I in /opt/Cortex-Analyzers/analyzers/*/requirements.txt; do  python3 -m pip install -r $I || true; done
+for I in $(find Cortex-Analyzers -name 'requirements.txt'); do sudo -H pip2 install -r $I; done && \
+for I in $(find Cortex-Analyzers -name 'requirements.txt'); do sudo -H pip3 install -r $I || true; done
 systemctl enable cortex
 
 #Yeti
