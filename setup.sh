@@ -7,18 +7,26 @@ fi
 #Java
 add-apt-repository ppa:openjdk-r/ppa
 #Elastic
-apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-key D88E42B4
-echo "deb https://artifacts.elastic.co/packages/5.x/apt stable main" |  tee -a /etc/apt/sources.list.d/elastic-5.x.list
-apt-get update
+# PGP key installation
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-key D88E42B4
+echo "deb https://artifacts.elastic.co/packages/5.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-5.x.list
+# Install https support for apt
+apt update
+sudo apt install -y apt-transport-https
+
+# Elasticsearch installation
 apt-get install -y --no-install-recommends apt-transport-https openjdk-8-jre-headless elasticsearch python-pip python2.7-dev python3-pip python3-dev ssdeep libfuzzy-dev libfuzzy2 libimage-exiftool-perl libmagic1 build-essential git libssl-dev
-pip install setuptools
+apt-get install -y --no-install-recommends python-pip python2.7-dev python3-pip python3-dev ssdeep libfuzzy-dev libfuzzy2 libimage-exiftool-perl libmagic1 build-essential git libssl-dev
+pip install -U pip setuptools && sudo pip3 install -U pip setuptools
+
+
 echo 'network.host: 127.0.0.1' > /etc/elasticsearch/elasticsearch.yml
 echo 'script.inline: on' >> /etc/elasticsearch/elasticsearch.yml
 echo 'cluster.name: hive' >> /etc/elasticsearch/elasticsearch.yml
 echo 'thread_pool.index.queue_size: 100000' >> /etc/elasticsearch/elasticsearch.yml
 echo 'thread_pool.search.queue_size: 100000' >> /etc/elasticsearch/elasticsearch.yml
 echo 'thread_pool.bulk.queue_size: 100000' >> /etc/elasticsearch/elasticsearch.yml
-systemctl enable elasticsearch
+systemctl enable elasticsearch.service
 
 ####Add or remove sections as needed if you do not want a full install
 #Hive
@@ -36,14 +44,13 @@ play.crypto.secret="$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 64 | head 
 _EOF_
 ) | sudo tee -a /etc/thehive/application.conf
 
-
 systemctl enable thehive
 
 #Cortex
 echo 'deb https://dl.bintray.com/thehive-project/debian-stable any main' | sudo tee -a /etc/apt/sources.list.d/thehive-project.list
 sudo apt-key adv --keyserver hkp://pgp.mit.edu --recv-key 562CBC1C
 sudo apt-get update
-sudo apt-get install cortex
+sudo apt-get -y install cortex
 
 (cat << _EOF_
 # Secret key
@@ -61,9 +68,6 @@ play.modules.enabled += connectors.cortex.CortexConnector
 
 cd /opt
 git clone https://github.com/TheHive-Project/Cortex-Analyzers
-python -m pip install --upgrade pip
-python3 -m pip install --upgrade pip
-python -m pip install setuptools
 for I in $(find Cortex-Analyzers -name 'requirements.txt'); do sudo -H pip2 install -r $I; done && \
 for I in $(find Cortex-Analyzers -name 'requirements.txt'); do sudo -H pip3 install -r $I || true; done
 systemctl enable cortex
